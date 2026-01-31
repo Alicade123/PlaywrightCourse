@@ -35,4 +35,29 @@
         </plugins>
     </build>
 
+    <profiles>
+        <profile>
+            <id>playwright-tests-chromium</id>
+            <properties>
+                <!-- Define the browser property for Playwright to use -->
+                <browser>chromium</browser>
+            </properties>
+            <build>
+                <plugins>
+                    <!-- Configure the Maven Surefire Plugin to run tests with the specified property -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-surefire-plugin</artifactId>
+                        <version>3.5.4</version>
+                        <configuration>
+                            <systemPropertyVariables>
+                                <browser>${browser}</browser>
+                            </systemPropertyVariables>
+                        </configuration>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
 </project>
