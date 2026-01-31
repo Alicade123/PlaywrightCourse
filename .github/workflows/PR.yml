@@ -1,0 +1,28 @@
+name: PR check naming convention
+
+on:
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+jobs:
+  pr-lint:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate PR title
+        uses: seferov/pr-lint-action@v1
+        with:
+          title-regex: '^AlicadePlayrightWorkflow-\d+\s.+'
+          error-message: 'PR title must be like: AlicadePlayrightWorkflow-123 Short description'
+
+  scan-pr-changes:
+    runs-on: ubuntu-latest
+    needs: pr-lint
+    name: Annotate pull request
+    steps:
+      - name: Annotate PR
+        uses: tau-github-actions-for-testing/tau-own-action-pull-request@v1
+        with:
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          pr_number: ${{ github.event.number }}
+          token: ${{ secrets.GITHUB_TOKEN }}
