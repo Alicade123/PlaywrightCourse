@@ -14,11 +14,11 @@ public class InteractionWithElements {
         Page page = browser.newPage();
 
 //        Todo:2. check entered text
-//        page.navigate("https://www.lambdatest.com/selenium-playground/simple-form-demo/");
-//        page.waitForSelector("#user-message");
-//        page.locator("input#user-message").type("Hey Alicade QA Engineer");
-//        page.locator("#showInput").click();
-//        assertThat(page.locator("#message")).hasText("Hey Alicade QA Engineer");
+        page.navigate("https://www.lambdatest.com/selenium-playground/simple-form-demo/");
+        page.waitForSelector("#user-message");
+        page.locator("input#user-message").type("Hey Alicade QA Engineer");
+        page.locator("#showInput").click();
+        assertThat(page.locator("#message")).hasText("Hey Alicade QA Engineer");
 //        Todo:3. differentiate 'type' and 'fill'
       //  page.navigate("https://www.lambdatest.com/selenium-playground/generate-file-to-download-demo/");
 //     //   page.locator("#textbox").type("TestSolutions Rwanda: Software quality assurance from Kigali with an experienced, ISTQB-certified team. Your partner for offshore software testing.");
