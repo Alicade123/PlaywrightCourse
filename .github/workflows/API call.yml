@@ -1,0 +1,42 @@
+name: build_by_api
+run-name: Build by API from user @${{ github.actor }}
+
+on:
+  repository_dispatch:
+    types: [api-build]
+
+jobs:
+  build:
+    name: Build Job
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '21'
+          cache: maven
+
+      - name: Run Unit Tests
+        run: mvn test
+
+      - name: Build with Maven
+        run: mvn -DskipTests -B package --no-transfer-progress
+
+      - name: Rename artifact
+        run: |
+          if [ -z "${{ github.event.client_payload.artifactName }}" ]; then
+            echo "artifactName is missing"
+            exit 1
+          fi
+          mv target/*.war "target/${{ github.event.client_payload.artifactName }}.war"
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ github.event.client_payload.artifactName }}.war
+          path: target/${{ github.event.client_payload.artifactName }}.war
